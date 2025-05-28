@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все рецепты</title>
+    <link rel="stylesheet" href="/css/recipes.css">
+</head>
+<body>
+<div th:replace="fragments/header :: navbar"></div>
+
+<div class="container">
+    <h1>Все рецепты</h1>
+
+    <!-- Форма поиска и фильтрации -->
+    <form method="get" action="/recipes" class="search-form">
+        <label for="ingredient">Поиск по ингредиентам:</label>
+        <input type="text" id="ingredient" name="ingredient"
+               th:value="${paramIngredient}" placeholder="Введите ингредиент"/>
+
+        <label for="category">Фильтрация по категориям:</label>
+        <select id="category" name="category">
+            <option value="" th:selected="${paramCategory == null or paramCategory.isEmpty()}">Все категории</option>
+            <option th:each="cat : ${categories}"
+                    th:value="${cat.name}"
+                    th:text="${cat.name}"
+                    th:selected="${cat.name == paramCategory}">
+            </option>
+        </select>
+
+
+        <button type="submit">Поиск</button>
+    </form>
+
+    <div class="recipe-grid">
+        <div th:each="recipe : ${recipes}" class="recipe-card">
+            <p class="author-name">Автор: <span th:text="${recipe.author.username}">Имя</span></p>
+
+            <a th:href="@{'/recipes/' + ${recipe.id}}">
+                <img th:src="${recipe.imageUrl}" alt="Фото рецепта" class="recipe-image"/>
+                <h3 th:text="${recipe.title}" class="recipe-title">Название</h3>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

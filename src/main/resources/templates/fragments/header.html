@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8" />
+  <title>Навигация</title>
+</head>
+<body>
+<div th:fragment="navbar">
+  <header>
+    <nav>
+      <a th:href="@{/recipes}" class="btn">Все рецепты</a>
+
+      <div th:if="${#authorization.expression('hasRole(''USER'')')}">
+        <a th:href="@{/my-recipes}" class="btn">Мои рецепты</a>
+        <a th:href="@{/favorites}" class="btn">Избранное</a>
+      </div>
+
+      <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <a th:href="@{/admin/recipe-requests}" class="btn">Заявки</a>
+      </div>
+
+      <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <a th:href="@{/logout}" class="btn">Выйти</a>
+      </div>
+
+      <div th:if="${#authorization.expression('isAnonymous()')}">
+        <a th:href="@{/login}" class="btn">Войти</a>
+        <a th:href="@{/register}" class="btn">Регистрация</a>
+      </div>
+    </nav>
+  </header>
+</div>
+</body>
+</html>
+

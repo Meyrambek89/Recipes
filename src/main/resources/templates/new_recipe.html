@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить рецепт</title>
+    <link rel="stylesheet" href="/css/recipes.css">
+</head>
+<body>
+<div th:replace="fragments/header :: navbar"></div>
+
+<div class="container">
+    <h1>Добавить новый рецепт</h1>
+
+    <form action="/my-recipes/new" method="post">
+        <label for="title">Название:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="description">Описание:</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <label for="ingredients">Ингредиенты:</label>
+        <textarea id="ingredients" name="ingredients" required></textarea>
+
+        <label for="imageUrl">URL изображения:</label>
+        <input type="text" id="imageUrl" name="imageUrl">
+
+        <label for="category.id">Категория:</label>
+        <select id="category.id" name="category.id" required>
+            <option value="">Выберите категорию</option>
+            <th:block th:each="category : ${categories}">
+                <option th:value="${category.id}" th:text="${category.name}"></option>
+            </th:block>
+        </select>
+
+
+        <button type="submit">Сохранить</button>
+    </form>
+
+</div>
+
+</body>
+</html>
