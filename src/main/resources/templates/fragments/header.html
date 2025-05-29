@@ -2,35 +2,72 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-  <meta charset="UTF-8" />
-  <title>Навигация</title>
+  <meta charset="UTF-8">
+  <title>Navigation</title>
 </head>
 <body>
 <div th:fragment="navbar">
-  <header>
-    <nav>
-      <a th:href="@{/recipes}" class="btn">Все рецепты</a>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .hh {
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+    .hh a {
+      color: white;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .hh a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+  <div class="hh">
+    <a href="/recipes">All recipes</a>
 
-      <div th:if="${#authorization.expression('hasRole(''USER'')')}">
-        <a th:href="@{/my-recipes}" class="btn">Мои рецепты</a>
-        <a th:href="@{/favorites}" class="btn">Избранное</a>
-      </div>
+    <div th:if="${#authorization.expression('hasRole(''USER'')')}">
+      <a href="/my-recipes">My recipes</a>
+      <a href="/favorites">Favorites</a>
+    </div>
 
-      <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-        <a th:href="@{/admin/recipe-requests}" class="btn">Заявки</a>
-      </div>
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+      <a href="/admin/recipe-requests">Applications</a>
+    </div>
+    <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+      <a href="/admin/panel">Users</a>
+    </div>
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+      <a href="/logout">Log out</a>
+    </div>
 
-      <div th:if="${#authorization.expression('isAuthenticated()')}">
-        <a th:href="@{/logout}" class="btn">Выйти</a>
-      </div>
+    <div th:if="${#authorization.expression('isAnonymous()')}">
+      <a href="/login">Login</a>
+      <a href="/register">Registration</a>
+    </div>
+  </div>
+</div>
 
-      <div th:if="${#authorization.expression('isAnonymous()')}">
-        <a th:href="@{/login}" class="btn">Войти</a>
-        <a th:href="@{/register}" class="btn">Регистрация</a>
-      </div>
-    </nav>
-  </header>
+<div th:fragment="comment(comment)">
+  <p>
+    <strong th:text="${comment.user.username}">Name</strong>:
+    <span th:text="${comment.text}">Comment</span>
+  </p>
 </div>
 </body>
 </html>
-

@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Рецепты</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
 
-<!-- Подключаем навигацию -->
 <div th:replace="fragments/header :: navbar"></div>
-
-<!-- Основной контент -->
-<main>
-    <h1>Добро пожаловать в мир рецептов!</h1>
-</main>
-
+<div class="content">
+    <h1>Welcome to the World of Recipes</h1>
+    <p>Recipes is a modern online recipe book where users can share culinary masterpieces, look for cooking inspiration, and chat with other chefs. The site was created to simplify the search and exchange of proven recipes, as well as to create an active community of cooking enthusiasts.</p>
+</div>
 </body>
 </html>
 

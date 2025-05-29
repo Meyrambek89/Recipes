@@ -10,26 +10,26 @@
 
     <h1>My Favorite Recipes</h1>
 
-    <div th:if="${favorites.isEmpty()}">
-        <p>You don't have any favorite recipes yet.</p>
+<div th:if="${favorites.isEmpty()}">
+    <p>You don't have any favorite recipes yet.</p>
+</div>
+
+<div th:each="favorite : ${favorites}" class="recipe-card">
+    <img th:src="${favorite.recipe.imageUrl}" alt="Recipe image"/>
+
+    <div class="recipe-details">
+        <h3>
+            <a th:href="@{'/recipes/' + ${favorite.recipe.id}}"
+               th:text="${favorite.recipe.title}">Recipe Title</a>
+        </h3>
     </div>
 
-    <div th:each="favorite : ${favorites}" class="recipe-card">
-        <img th:src="${favorite.recipe.imageUrl}" alt="Recipe image"/>
-
-        <div class="recipe-details">
-            <h3>
-                <a th:href="@{'/recipes/' + ${favorite.recipe.id}}"
-                   th:text="${favorite.recipe.title}">Recipe Title</a>
-            </h3>
-        </div>
-
-        <div class="recipe-actions">
-            <form th:action="@{'/favorites/delete/' + ${favorite.id}}" method="post">
-                <button type="submit">Remove from favorites</button>
-            </form>
-        </div>
+    <div class="recipe-actions">
+        <form th:action="@{'/favorites/delete/' + ${favorite.id}}" method="post">
+            <button type="submit">Remove from favorites</button>
+        </form>
     </div>
+</div>
 
 </body>
 </html>

@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Заявки на рецепты</title>
+  <title>Prescription Requests</title>
   <link rel="stylesheet" href="/css/recipes.css">
 </head>
 <body>
@@ -10,20 +10,21 @@
 
 
 <div class="container">
-  <h1>Заявки на рецепты</h1>
+  <h1>Prescription Requests</h1>
 
   <div class="recipe-list">
     <div th:each="recipe : ${pendingRecipes}" class="recipe-card">
-      <img th:if="${recipe.imageUrl}" th:src="${recipe.imageUrl}" alt="Фото рецепта" style="max-width:100%; border-radius:8px;">
-      <h2 th:text="${recipe.title}">Название</h2>
-      <p th:text="${recipe.description}">Описание</p>
+      <p class="author-name">Author: <span th:text="${recipe.author.username}">Name</span></p>
+      <img th:if="${recipe.imageUrl}" th:src="${recipe.imageUrl}" alt="Photo of recipe" style="max-width:100%; border-radius:8px;">
+      <h2 th:text="${recipe.title}">Name</h2>
+      <p th:text="${recipe.description}">Description</p>
 
       <div class="actions">
         <form th:action="@{'/admin/recipes/approve/' + ${recipe.id}}" method="post" style="display:inline;">
-          <button type="submit" class="edit-button">✅ Одобрить</button>
+          <button type="submit" class="edit-button">✅ Accept</button>
         </form>
         <form th:action="@{'/admin/recipes/delete/' + ${recipe.id}}" method="post" style="display:inline;">
-          <button type="submit" class="delete-button">❌ Удалить</button>
+          <button type="submit" class="delete-button">❌ Delete</button>
         </form>
       </div>
     </div>

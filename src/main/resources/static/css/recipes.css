@@ -1,17 +1,23 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #f9f9f9;
+    background-image: url(https://p0.zoon.ru/preview/VCPxxvNDCuc-SCH1g_BfNA/2400x1500x75/1/a/b/original_5d822d2b10de9a0dd9525928_625f5c5778aad4.87074274.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    min-height: 100vh;
+    font-family: sans-serif;
 }
-
 .container {
     max-width: 800px;
-    margin: auto;
-    background: #fff;
+    min-height: auto;
+    background: rgba(255, 255, 255, 0.85);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin: 100px auto 100px;
+
 }
 
 h1 {
@@ -21,26 +27,24 @@ h1 {
 
 .add-button {
     display: inline-block;
-    background-color: #28a745;
+    background-color: #0B1562FF;
     color: white;
     padding: 10px 16px;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
     margin-bottom: 20px;
+
 }
 
-.recipe-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+
 
 .recipe-card {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
     background: #fefefe;
+    margin: 50px auto 50px;
 }
 
 .recipe-card h2 {
@@ -64,13 +68,13 @@ h1 {
 }
 
 .edit-button {
-    background-color: #007bff;
+    background-color: #0B1562FF;
     color: white;
 }
 
 .delete-button {
-    background-color: #dc3545;
-    color: white;
+    background-color: #990000 !important;
+    color: white !important;
 }
 
 .delete-form {
@@ -80,6 +84,7 @@ form {
     display: flex;
     flex-direction: column;
     gap: 15px;
+
 }
 
 label {
@@ -104,7 +109,7 @@ textarea {
 }
 
 button[type="submit"] {
-    background-color: #28a745;
+    background-color: #0B1562FF;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -115,5 +120,118 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #218838;
+    background-color: #884f21;
 }
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+.recipe-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.recipe-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #f9f9f9;
+    transition: transform 0.2s ease;
+}
+
+.recipe-image {
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin: 50px auto 50px;
+}
+
+.recipe-title {
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.author-name {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+
+.recipe-card:hover {
+    transform: scale(1.01);
+}
+
+.recipe-card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.recipe-details {
+    flex-grow: 1;
+}
+
+.recipe-details h3 {
+    margin: 0;
+}
+
+.recipe-details a {
+    text-decoration: none;
+    color: #0B1562FF;
+}
+
+.recipe-details a:hover {
+    text-decoration: underline;
+}
+
+.recipe-actions {
+    margin-left: auto;
+}
+
+.recipe-actions button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.recipe-actions button:hover {
+    background-color: #a82834;
+}
+
+/* Сообщение, если избранного нет */
+.empty-message {
+    text-align: center;
+    font-style: italic;
+    color: #444;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 10px;
+}
+.favorites-title {
+    background-color: #000;             /* Чёрный фон */
+    color: #fff;                        /* Белый текст */
+    text-align: center;
+    padding: 20px 0;
+    font-size: 28px;
+    font-weight: bold;
+    border-radius: 0 0 12px 12px;       /* Скругление снизу */
+    z-index: 10;
+    position: relative;
+}
+

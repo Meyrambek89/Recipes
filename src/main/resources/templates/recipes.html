@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Все рецепты</title>
+    <title>All recipes</title>
     <link rel="stylesheet" href="/css/recipes.css">
 </head>
 <body>
 <div th:replace="fragments/header :: navbar"></div>
 
 <div class="container">
-    <h1>Все рецепты</h1>
+    <h1>All recipes</h1>
 
-    <!-- Форма поиска и фильтрации -->
     <form method="get" action="/recipes" class="search-form">
-        <label for="ingredient">Поиск по ингредиентам:</label>
+        <label for="ingredient">Search by ingredients:</label>
         <input type="text" id="ingredient" name="ingredient"
-               th:value="${paramIngredient}" placeholder="Введите ингредиент"/>
+               th:value="${paramIngredient}" placeholder="Enter ingredient"/>
 
-        <label for="category">Фильтрация по категориям:</label>
+        <label for="category">Filter by categories:</label>
         <select id="category" name="category">
-            <option value="" th:selected="${paramCategory == null or paramCategory.isEmpty()}">Все категории</option>
+            <option value="" th:selected="${paramCategory == null or paramCategory.isEmpty()}">All categories</option>
             <option th:each="cat : ${categories}"
                     th:value="${cat.name}"
                     th:text="${cat.name}"
@@ -27,20 +26,20 @@
             </option>
         </select>
 
-
-        <button type="submit">Поиск</button>
+        <button type="submit">Search</button>
     </form>
 
     <div class="recipe-grid">
-        <div th:each="recipe : ${recipes}" class="recipe-card">
-            <p class="author-name">Автор: <span th:text="${recipe.author.username}">Имя</span></p>
+        <div th:each="recipe : ${recipes}" style="border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; border-radius: 10px; display: flex; align-items: center; gap: 20px; background-color: #f9f9f9; transition: transform 0.2s ease;  text-align: center; flex-direction: column;">
+            <p class="author-name">Author: <span th:text="${recipe.author.username}">Name</span></p>
 
             <a th:href="@{'/recipes/' + ${recipe.id}}">
-                <img th:src="${recipe.imageUrl}" alt="Фото рецепта" class="recipe-image"/>
-                <h3 th:text="${recipe.title}" class="recipe-title">Название</h3>
+                <img th:src="${recipe.imageUrl}" alt="Recipe photo" style="width:100%; max-height:200px; object-fit:cover; border-radius:8px;"/>
+                <h3 th:text="${recipe.title}" style="text-align:center; margin-top:10px;">Name</h3>
             </a>
         </div>
     </div>
 </div>
+
 </body>
 </html>

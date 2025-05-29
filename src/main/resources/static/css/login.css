@@ -1,6 +1,6 @@
 body {
+    background-image: url(https://p0.zoon.ru/preview/VCPxxvNDCuc-SCH1g_BfNA/2400x1500x75/1/a/b/original_5d822d2b10de9a0dd9525928_625f5c5778aad4.87074274.jpg);
     font-family: Arial, sans-serif;
-    background: #f2f2f2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,6 +14,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
     width: 300px;
+
 }
 
 .login-container h2 {

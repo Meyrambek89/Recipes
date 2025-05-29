@@ -2,22 +2,22 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Мои рецепты</title>
+    <title>My recipes</title>
     <link rel="stylesheet" href="/css/recipes.css">
 </head>
 <body>
 <div th:replace="fragments/header :: navbar"></div>
 
 <div class="container">
-    <h1>Мои рецепты</h1>
+    <h1>My recipes</h1>
 
-    <a href="/my-recipes/new" class="add-button">➕ Добавить рецепт</a>
+    <a href="/my-recipes/new" class="add-button">➕ Add a recipe</a>
 
-    <div class="recipe-list">
+    <div class="recipe-grid">
         <div th:each="recipe : ${recipes}" class="recipe-card">
             <a th:href="@{'/recipes/' + ${recipe.id}}">
-                <img th:src="${recipe.imageUrl}" alt="Фото рецепта" style="width:100%; max-height:200px; object-fit:cover; border-radius:8px;"/>
-                <h2 th:text="${recipe.title}" style="text-align:center; margin-top:10px;">Название рецепта</h2>
+                <img th:src="${recipe.imageUrl}" alt="Recipe photo" style="width:100%; max-height:200px; object-fit:cover; border-radius:8px;"/>
+                <h2 th:text="${recipe.title}" style="text-align:center; margin-top:10px;">Recipe name</h2>
             </a>
         </div>
     </div>

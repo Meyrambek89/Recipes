@@ -2,40 +2,40 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Редактировать рецепт</title>
+  <title>Edit recipe</title>
   <link rel="stylesheet" href="/css/recipes.css">
 </head>
 <body>
 <div th:replace="fragments/header :: navbar"></div>
 
 <div class="container">
-  <h1>Редактировать рецепт</h1>
+  <h1>Edit recipe</h1>
 
   <form th:action="@{'/recipes/edit/' + ${recipe.id}}" method="post">
-    <label>Название:</label>
+    <label>Name:</label>
     <input type="text" name="title" th:value="${recipe.title}" required />
 
-    <label>Описание:</label>
+    <label>Description:</label>
     <textarea name="description" required th:text="${recipe.description}"></textarea>
 
-    <label>Ингредиенты:</label>
+    <label>Ingredients:</label>
     <textarea name="ingredients" required th:text="${recipe.ingredients}"></textarea>
 
-    <label>Ссылка на фото:</label>
+    <label>Link to photo:</label>
     <input type="text" name="imageUrl" th:value="${recipe.imageUrl}" />
 
-    <label>Категория:</label>
+    <label>Category:</label>
     <select name="category.id">
       <option th:each="cat : ${categories}"
               th:value="${cat.id}"
               th:selected="${cat.id} == ${recipe.category.id}"
-              th:text="${cat.name}">Категория</option>
+              th:text="${cat.name}">Category</option>
     </select>
 
-    <button type="submit" class="edit-button">💾 Сохранить изменения</button>
+    <button type="submit" class="edit-button">💾 Save changes</button>
   </form>
 
-  <a href="/my-recipes" class="cancel-button">🔙 Назад</a>
+  <a href="/my-recipes" class="cancel-button">🔙 Back</a>
 </div>
 
 </body>

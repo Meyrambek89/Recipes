@@ -1,78 +1,119 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${recipe.title}">Рецепт</title>
+    <title th:text="${recipe.title}">Recipe</title>
     <link rel="stylesheet" href="/css/recipes.css">
 </head>
 <body>
-<div th:replace="fragments/header :: navbar"></div>
+
+<div th:replace="~{fragments/header :: navbar}"></div>
 
 <div class="container">
-    <h1 th:text="${recipe.title}">Название рецепта</h1>
+    <h1 th:text="${recipe.title}">Recipe name</h1>
 
-    <p>Автор: <strong th:text="${recipe.author.username}">Автор</strong></p>
+    <p>Author: <strong th:text="${recipe.author != null ? recipe.author.username : 'Неизвестный автор'}">Автор</strong></p>
 
-    <img th:src="${recipe.imageUrl}" alt="Фото рецепта" style="width:100%; max-height:400px; object-fit:cover; border-radius:8px; margin-bottom:20px;"/>
+    <img th:src="${recipe.imageUrl}" alt="Recipe photo"
+         style="width:100%; max-height:500px; object-fit:cover; border-radius:8px; margin-bottom:20px;"/>
 
-    <h3>Описание:</h3>
-    <p th:text="${recipe.description}">Описание рецепта</p>
+    <h3>Description:</h3>
+    <p th:text="${recipe.description}">Recipe Description</p>
 
-    <h3>Ингредиенты:</h3>
-    <p th:text="${recipe.ingredients}">Ингредиенты</p>
+    <h3>Ingredients:</h3>
+    <p th:text="${recipe.ingredients}">ingredients</p>
 
-    <!-- Только для автора -->
+
+
     <div class="actions" th:if="${#authentication.name == recipe.author.username}">
-        <a th:href="@{'/recipes/edit/' + ${recipe.id}}" class="edit-button">✏️ Изменить</a>
+        <a th:href="@{'/recipes/edit/' + ${recipe.id}}" class="edit-button">✏ Change</a>
         <form th:action="@{'/recipes/delete/' + ${recipe.id}}" method="post" class="delete-form">
-            <button type="submit" class="delete-button">🗑️ Удалить</button>
+            <button type="submit" class="delete-button">🗑 Delete</button>
         </form>
     </div>
 
-    <!-- Для всех пользователей -->
+
+
     <div class="user-actions">
-        <form th:action="@{'/favorites/add/' + ${recipe.id}}" method="post">
-            <button type="submit" class="favorite-button">⭐ Добавить в избранное</button>
-        </form>
 
-        <form th:action="@{'/ratings/rate/' + ${recipe.id}}" method="post">
-            <label>Оценка:
-                <select name="rating">
-                    <option value="1">1 ⭐</option>
-                    <option value="2">2 ⭐⭐</option>
-                    <option value="3">3 ⭐⭐⭐</option>
-                    <option value="4">4 ⭐⭐⭐⭐</option>
-                    <option value="5">5 ⭐⭐⭐⭐⭐</option>
-                </select>
-            </label>
-            <button type="submit">Поставить оценку</button>
-        </form>
-    </div>
 
-    <!-- Комментарии -->
-    <div class="comments">
-        <h3>Комментарии:</h3>
-
-        <div th:each="comment : ${recipe.comments}">
-            <p><strong th:text="${comment.user.username}">Имя</strong>: <span th:text="${comment.text}">Комментарий</span></p>
+        <div th:if="${not isFavorite}">
+            <form th:action="@{'/favorites/add/' + ${recipe.id}}" method="post">
+                <button type="submit" class="favorite-button">⭐ Add to favorites</button>
+            </form>
+        </div>
+        <div th:if="${isFavorite}">
+            <button class="favorite-button" disabled>✅ In favorites</button>
         </div>
 
-        <form th:action="@{'/comments/add/' + ${recipe.id}}" method="post">
-            <textarea name="text" placeholder="Оставьте комментарий..." required></textarea><br>
-            <button type="submit">Отправить</button>
+        <!-- Показ оценки -->
+        <div th:if="${userRating != null}" style="margin-top: 10px;">
+            <p>Your rating:
+                <span th:text="${userRating}"></span>
+                <span th:switch="${userRating}">
+                    <span th:case="1">⭐</span>
+                    <span th:case="2">⭐⭐</span>
+                    <span th:case="3">⭐⭐⭐</span>
+                    <span th:case="4">⭐⭐⭐⭐</span>
+                    <span th:case="5">⭐⭐⭐⭐⭐</span>
+                </span>
+            </p>
+        </div>
+
+
+
+        <form th:action="@{'/ratings/rate/' + ${recipe.id}}" method="post">
+            <label>Grade:
+                <select name="rating">
+                    <option th:value="1" th:selected="${userRating == 1}">1 ⭐</option>
+                    <option th:value="2" th:selected="${userRating == 2}">2 ⭐⭐</option>
+                    <option th:value="3" th:selected="${userRating == 3}">3 ⭐⭐⭐</option>
+                    <option th:value="4" th:selected="${userRating == 4}">4 ⭐⭐⭐⭐</option>
+                    <option th:value="5" th:selected="${userRating == 5}">5 ⭐⭐⭐⭐⭐</option>
+                </select>
+            </label>
+            <button type="submit">Give a rating</button>
+        </form>
+
+
+        <div th:if="${ratingMessage}" class="rating-feedback">
+            <p th:text="${ratingMessage}"></p>
+            <p>
+                <span th:each="i : ${#numbers.sequence(1, ${param.rating})}">⭐</span>
+            </p>
+        </div>
+    </div>
+
+
+    <h3>Comments</h3>
+
+    <div th:if="${recipe.comments != null}" class="comments-container">
+        <div th:each="comment : ${recipe.comments}" class="comment-card">
+            <p>
+                <strong th:text="${comment.user.username}">Имя</strong> —
+                <span th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')}">Дата</span>
+            </p>
+            <p th:text="${comment.content}">Comments</p>
+
+
+            <div sec:authorize="isAuthenticated()">
+                <form th:if="${#authentication.name == comment.user.username or #authorization.expression('hasRole(''ADMIN'')')}"
+                      th:action="@{'/recipes/' + ${recipe.id} + '/comments/' + ${comment.id} + '/delete'}"
+                      method="post" style="display: inline;">
+                    <button type="submit" class="delete-button">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div sec:authorize="isAuthenticated()" style="margin-top: 20px;">
+        <form th:action="@{'/recipes/' + ${recipe.id} + '/comments'}" method="post">
+            <textarea name="content" rows="3" placeholder="Write your comment..."required></textarea>
+            <button type="submit" class="save-button">Post a comment</button>
         </form>
     </div>
 </div>
 
-<style>
-    .comments textarea {
-        width: 100%;
-        height: 80px;
-        margin-top: 10px;
-    }
-    .user-actions {
-        margin-top: 20px;
-    }
-</style>
 </body>
 </html>
