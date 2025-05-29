@@ -5,13 +5,13 @@
     <link rel="stylesheet" th:href="@{/css/recipes.css}">
 </head>
 <body>
-<div th:replace="fragments/header :: navbar"></div>
+<div th:replace="fragments/header ::  navbar"></div>
 <div class="container">
 
     <h1>My Favorite Recipes</h1>
 
 <div th:if="${favorites.isEmpty()}">
-    <p>You don't have any favorite recipes yet.</p>
+    <p>You don't have any favorite recipes yet</p>
 </div>
 
 <div th:each="favorite : ${favorites}" class="recipe-card">

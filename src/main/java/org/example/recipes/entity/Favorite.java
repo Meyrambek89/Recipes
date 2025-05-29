@@ -25,11 +25,12 @@ public class Favorite {
     }
 
     public Recipe getRecipe() {
-        return recipe;
+
+         return recipe;
     }
 
     public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
+        this.recipe =  recipe;
     }
 
     public User getUser() {
@@ -37,8 +38,8 @@ public class Favorite {
     }
 
     public void setUser(User user) {
-        this.user = user;
+
+         this.user = user;
     }
 
-    // геттеры и сеттеры
 }

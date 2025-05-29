@@ -19,20 +19,22 @@ public class FavoriteService {
     }
 
 
-    private UserRepository userRepository;
+    private UserRepository  userRepository;
 
     public List<Favorite> getFavoritesByUserId(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+                .orElseThrow(() -> new RuntimeException("Пользователь не найдена"));
         return favoriteRepository.findByUser(user);
     }
 
 
     public Favorite addFavorite(Favorite favorite) {
+
         return favoriteRepository.save(favorite);
     }
 
     public void removeFavorite(Long id) {
+
         favoriteRepository.deleteById(id);
     }
 
