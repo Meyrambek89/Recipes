@@ -27,6 +27,8 @@ public class RecipeController {
         this.categoryService = categoryService;
     }
 
+
+
     @GetMapping("/recipes-data")
     @ResponseBody
     public List<Recipe> getAllRecipes() {

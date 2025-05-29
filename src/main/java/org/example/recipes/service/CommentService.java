@@ -20,6 +20,8 @@ public class CommentService {
         return commentRepository.findByRecipeId(recipeId); // ✅ теперь доступен
     }
 
+
+
     public void deleteComment(Long id) {
         commentRepository.deleteById(id);
     }
