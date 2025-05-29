@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Users</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div th:replace="fragments/header :: navbar"></div>
+
+
+<main>
+    <p>Welcome, administrator!</p>
+
+    <h2>Users List</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">1</td>
+            <td th:text="${user.username}">username</td>
+            <td th:text="${user.email}">email@example.com</td>
+            <td>
+                <span th:if="${user.role == 'ADMIN'}">ADMIN</span>
+                <span th:unless="${user.role == 'ADMIN'}">USER</span>
+            </td>
+            <td>
+                <form th:if="${user.role != 'ADMIN'}"
+                      th:action="@{'/admin/panel/make-admin/' + ${user.id}}"
+                      method="post">
+                    <button type="submit">Make Admin</button>
+                </form>
+                <form th:if="${user.role == 'ADMIN'}"
+                      th:action="@{'/admin/panel/remove-admin/' + ${user.id}}"
+                      method="post">
+                    <button type="submit">Remove Admin</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(users)}">
+            <td colspan="5" style="text-align:center; font-style: italic; color: #888;">
+                No users found.
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/}" class="button">Back to Home</a>
+
+</main>
+</body>
+</html>
+
+
